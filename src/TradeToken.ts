@@ -113,7 +113,7 @@ export default class TradeToken extends TokenInfo {
       });
   }
   async getAccountOffers(
-    options?: orderDetailsOptions,
+    options?: orderDetailsOptions | undefined,
     streamCallBack?: any,
   ): Promise<any> {
     if (streamCallBack) {

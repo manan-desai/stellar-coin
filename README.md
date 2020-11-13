@@ -128,7 +128,7 @@ const {balances} = await StallerToken.getBalance(distributorPublicKey,"test") //
 - price will be in native token
 
 ```
-import {CreateWallet} from "stellar-token";
+import {TradeToken} from "stellar-token";
 let distributor = "SAZMHZM6NYVYRV53GV2LDWUKUL2TMG46HPUTE5CTZD2TAV3G375MJTPH";
 
 let issuingPublicKey =
@@ -154,7 +154,7 @@ math 50000\*10 = 500000 worth of xml you are selling
 - now you have sold your token from distributor account now time to make interface that buyer can buy your token. Before buying make sure buyers have sufficient xlm in their account. In example make sure buyer Key have minimum 200\*10 = 2000 xlm.
 
 ```
-import {CreateWallet} from "stellar-token";
+import {TradeToken} from "stellar-token";
 let buyerKey = "SAZMHZM6NYVYRV53GV2LDWUKUL2TMG46HPUTE5CTZD2TAV3G375MJTPH";
 
 let issuingPublicKey =
@@ -178,12 +178,46 @@ const res = await buyToken.buyToken({ buyAmount: "200", price: 10 });
 
 ```
 
+##### get offer details
+
+- you can also reftrive all of your offer details, by simply using `getAccountOffers()` method of CreateWallet's class.
+- you can provide filter by passing filter value on first parameter of `getAccountOffers()`. ex:- `getAccountOffers({ limit: 2 })`
+  here is interface for filters. `cursor` will skip order up to given order number.
+
+```
+interface orderDetailsOptions {
+  limit?: number;
+  cursor?: string;
+  order?: "asc" | "desc";
+}
+```
+
+- second perameter should be callBack if you want to listen offer event, it will give you live offer details. ex:-`getAccountOffers(undefined,(e)=>console.log(e))`
+
+```
+import {CreateWallet} from "stellar-token";
+let myKey = "SAZMHZM6NYVYRV53GV2LDWUKUL2TMG46HPUTE5CTZD2TAV3G375MJTPH";
+
+let issuingPublicKey =
+"GAZPNXHR26OE44VR7OITWXFI7KGKJCTV5JBB3VSAOWWDJ7X4HYQU6BMD";
+
+let myToken = new TradeToken(
+tokenName,
+issuingPublicKey,
+"test", // network testNet
+myKey,
+);
+let orderDetails = await myToken.getAccountOffers({ limit: 2 });
+let orderDetails = await myToken.getAccountOffers({ limit: 2,cursor:"orderid ex 1234" });
+let orderDetails = await myToken.getAccountOffers({ limit: 2 },yourCallback);
+
+```
+
 ### Upcoming version
 
 - Transfer your token to receiver
 - retrieve your token's current price
 - cancel your order.
-- event listener so you can display your live buy and sell orders
 
 ## License
 
