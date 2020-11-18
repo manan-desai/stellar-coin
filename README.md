@@ -192,7 +192,7 @@ interface orderDetailsOptions {
 }
 ```
 
-- second perameter should be callBack if you want to listen offer event, it will give you live offer details. ex:-`getAccountOffers(undefined,(e)=>console.log(e))`
+- second perameter should be callBack if you want to listen offer events, it will listen live offer details. ex:-`getAccountOffers(undefined,(e)=>console.log(e))`
 
 ```
 import {CreateWallet} from "stellar-token";
