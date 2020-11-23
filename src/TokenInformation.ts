@@ -3,11 +3,13 @@ export default class TokenInfo {
   protected server: Server;
   protected tokenName: string;
   protected tokenInfo: string;
+  protected networkType: string;
   constructor(
     tokenName: string,
     issuerPublicKey: string,
     networkType: string = "test",
   ) {
+    this.networkType = networkType;
     this.server = new StellarSdk.Server(
       networkType == "main"
         ? "https://horizon.stellar.org"
@@ -23,8 +25,11 @@ export default class TokenInfo {
       .loadAccount(receiverKeyPair.publicKey())
       .then(function (receiver: AccountResponse) {
         let transaction = new StellarSdk.TransactionBuilder(receiver, {
-          fee: 100,
-          networkPassphrase: StellarSdk.Networks.TESTNET,
+          fee: StellarSdk.BASE_FEE,
+          networkPassphrase:
+            self.networkType == "main"
+              ? StellarSdk.Networks.PUBLIC
+              : StellarSdk.Networks.TESTNET,
         })
           // The `changeTrust` operation creates (or alters) a trustline
           // The `limit` parameter below is optional

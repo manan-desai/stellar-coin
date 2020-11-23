@@ -1,8 +1,4 @@
-import axios, {
-  AxiosAdapter,
-  AxiosBasicCredentials,
-  AxiosInstance,
-} from "axios";
+import axios from "axios";
 import StellarSdk, { Keypair } from "stellar-sdk";
 export default class CreateAccount {
   private keyPair: Keypair;

@@ -16,8 +16,11 @@ class StellarToken extends TokenInfo {
       .loadAccount(issuerKeyPair.publicKey())
       .then(function (issuer: AccountResponse) {
         let transaction = new StellarSdk.TransactionBuilder(issuer, {
-          fee: 100,
-          networkPassphrase: StellarSdk.Networks.TESTNET,
+          fee: StellarSdk.BASE_FEE,
+          networkPassphrase:
+            self.networkType == "main"
+              ? StellarSdk.Networks.PUBLIC
+              : StellarSdk.Networks.TESTNET,
         })
           .addOperation(
             StellarSdk.Operation.payment({
@@ -40,8 +43,11 @@ class StellarToken extends TokenInfo {
       .loadAccount(issuerKeyPair.publicKey())
       .then(function (issuer: AccountResponse) {
         let transaction = new StellarSdk.TransactionBuilder(issuer, {
-          fee: 100,
-          networkPassphrase: StellarSdk.Networks.TESTNET,
+          fee: StellarSdk.BASE_FEE,
+          networkPassphrase:
+            self.networkType == "main"
+              ? StellarSdk.Networks.PUBLIC
+              : StellarSdk.Networks.TESTNET,
         })
           .addOperation(
             StellarSdk.Operation.setOptions({

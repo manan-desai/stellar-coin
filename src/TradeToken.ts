@@ -42,8 +42,11 @@ export default class TradeToken extends TokenInfo {
       .loadAccount(receiverKeyPair.publicKey())
       .then(function (receiver: AccountResponse) {
         let transaction = new StellarSdk.TransactionBuilder(receiver, {
-          fee: 100,
-          networkPassphrase: StellarSdk.Networks.TESTNET,
+          fee: StellarSdk.BASE_FEE,
+          networkPassphrase:
+            self.networkType == "main"
+              ? StellarSdk.Networks.PUBLIC
+              : StellarSdk.Networks.TESTNET,
         })
           // The `changeTrust` operation creates (or alters) a trustline
           // The `limit` parameter below is optional
@@ -67,8 +70,11 @@ export default class TradeToken extends TokenInfo {
       .loadAccount(this.keyPair.publicKey())
       .then(function (receiver) {
         var transaction = new StellarSdk.TransactionBuilder(receiver, {
-          fee: 100,
-          networkPassphrase: StellarSdk.Networks.TESTNET,
+          fee: StellarSdk.BASE_FEE,
+          networkPassphrase:
+            self.networkType == "main"
+              ? StellarSdk.Networks.PUBLIC
+              : StellarSdk.Networks.TESTNET,
         })
           .addOperation(
             StellarSdk.Operation.manageSellOffer({
@@ -93,8 +99,11 @@ export default class TradeToken extends TokenInfo {
       .loadAccount(this.keyPair.publicKey())
       .then(function (receiver) {
         var transaction = new StellarSdk.TransactionBuilder(receiver, {
-          fee: 100,
-          networkPassphrase: StellarSdk.Networks.TESTNET,
+          fee: StellarSdk.BASE_FEE,
+          networkPassphrase:
+            self.networkType == "main"
+              ? StellarSdk.Networks.PUBLIC
+              : StellarSdk.Networks.TESTNET,
         })
           .addOperation(
             StellarSdk.Operation.manageBuyOffer({
